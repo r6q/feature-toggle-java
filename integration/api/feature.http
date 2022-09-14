@@ -1,0 +1,42 @@
+### Get All Features
+GET http://localhost:8080/api/v1/features/
+
+### Get Feature By Id
+GET http://localhost:8080/api/v1/features/3
+
+### Create Feature
+POST http://localhost:8080/api/v1/features
+Content-Type: application/json
+
+{
+  "name": "FIRST_{{$randomInt}}{{$randomInt}}{{$randomInt}}",
+  "description": "this is a test description",
+  "enabled": true,
+  "expiration": "2023-12-22T12:55:00"
+}
+
+### Create Feature with Error
+POST http://localhost:8080/api/v1/features
+Content-Type: application/json
+
+{
+  "name": "",
+  "description": "this is a test description",
+  "enabled": true,
+  "expiration": "2023-12-22T12:55:00"
+}
+
+### Update Feature
+PUT http://localhost:8080/api/v1/features/20
+Content-Type: application/json
+
+{
+  "id": 20,
+  "name": "FIRST_{{$randomInt}}{{$randomInt}}{{$randomInt}}",
+  "description": "this is a test description updated",
+  "enabled": false,
+  "expiration": "2023-12-22T12:55:00"
+}
+
+### Delete Feature
+DELETE http://localhost:8080/api/v1/features/34

@@ -1,0 +1,26 @@
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <timestampPattern>dd-MM-yyyy HH:mm:ss.SSS'+00:00', UTC</timestampPattern>
+            <excludeMdcKeyName>X-B3-SpanId</excludeMdcKeyName>
+            <excludeMdcKeyName>X-B3-TraceId</excludeMdcKeyName>
+            <excludeMdcKeyName>X-B3-ParentSpanId</excludeMdcKeyName>
+            <excludeMdcKeyName>X-Span-Export</excludeMdcKeyName>
+            <excludeMdcKeyName>spanExportable</excludeMdcKeyName>
+            <fieldNames>
+                <timestamp>timestamp</timestamp>
+                <version>[ignore]</version>
+                <logger>logger</logger>
+                <thread>thread</thread>
+                <levelValue>[ignore]</levelValue>
+            </fieldNames>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>

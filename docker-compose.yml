@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  app:
+    container_name: feature-toggle-app
+    image: feature-toggle:0.0.1-SNAPSHOT
+    networks:
+      - feature-toggle-java
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - '8080:8080'
+    depends_on:
+      - db
+
+  db:
+    container_name: feature-toggle-db
+    image: mariadb:10.8
+    networks:
+      - feature-toggle-java
+    environment:
+      TZ: "UTC"
+      MYSQL_DATABASE: feat
+      MYSQL_USER: feat_u
+      MYSQL_PASSWORD: feat_p
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - '3309:3306'
+
+networks:
+  feature-toggle-java:
+    driver: bridge

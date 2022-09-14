@@ -1,0 +1,15 @@
+db:
+  host: localhost:3309
+
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    password: feat_p
+    username: feat_u
+    url: jdbc:mariadb://${db.host}:3309/feat
+  jackson:
+    default-property-inclusion: non_absent
+  flyway:
+    password: feat_p
+    user: feat_u
+    url: jdbc:mariadb://${db.host}:3309/feat
