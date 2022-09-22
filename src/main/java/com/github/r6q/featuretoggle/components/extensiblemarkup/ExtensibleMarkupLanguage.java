@@ -8,9 +8,11 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 @JacksonXmlRootElement(localName = "ApiResponse")
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
 record ExtensibleMarkupLanguage(
+        @JacksonXmlProperty(localName = "Id")
         int id,
+        @JacksonXmlProperty(localName = "Name")
         String name,
-        @JacksonXmlProperty(isAttribute = true)
+        @JacksonXmlProperty(isAttribute = true, localName = "Status")
         String status,
         @JacksonXmlProperty(localName = "GMTTime")
         String gmtTime
