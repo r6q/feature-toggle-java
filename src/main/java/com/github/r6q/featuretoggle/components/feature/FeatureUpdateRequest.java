@@ -2,8 +2,8 @@ package com.github.r6q.featuretoggle.components.feature;
 
 import java.time.LocalDateTime;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 record FeatureUpdateRequest(
         int id,

@@ -24,7 +24,7 @@ services:
       MYSQL_PASSWORD: feat_p
       MYSQL_ROOT_PASSWORD: root
     ports:
-      - '3309:3306'
+      - '3316:3306'
 
 networks:
   feature-toggle-java:

@@ -29,8 +29,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import javax.validation.ConstraintViolationException;
-import javax.validation.ElementKind;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.ElementKind;
 
 import static com.github.r6q.featuretoggle.common.rest.ErrorCode.CONVERSION;
 import static com.github.r6q.featuretoggle.common.rest.ErrorCode.INTERNAL;

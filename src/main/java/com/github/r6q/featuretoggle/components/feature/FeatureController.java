@@ -3,6 +3,7 @@ package com.github.r6q.featuretoggle.components.feature;
 import com.github.r6q.featuretoggle.common.rest.DataResponse;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,7 +27,7 @@ import lombok.AllArgsConstructor;
 @Tag(name = "features", description = "Feature controller")
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/v1/features")
+@RequestMapping(path = "/api/v1/features", produces = MediaType.APPLICATION_JSON_VALUE)
 class FeatureController {
 
     private final FeatureService service;

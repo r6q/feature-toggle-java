@@ -1,13 +1,13 @@
 plugins {
-  id 'com.google.cloud.tools.jib' version '3.2.1'
-  id 'org.springframework.boot' version '2.7.2'
-  id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+  id 'com.google.cloud.tools.jib' version '3.4.4'
+  id 'org.springframework.boot' version '3.4.3'
+  id 'io.spring.dependency-management' version '1.1.7'
   id 'java'
 }
 
 group = 'com.github.r6q'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = '23'
 
 configurations {
   compileOnly {
@@ -26,28 +26,28 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-validation'
   implementation 'org.springframework.boot:spring-boot-starter-web'
 
-  implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.4'
+  implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.18.3'
 
-  implementation 'net.logstash.logback:logstash-logback-encoder:7.2'
+  implementation 'net.logstash.logback:logstash-logback-encoder:8.0'
 
   implementation 'org.flywaydb:flyway-core'
   implementation 'org.flywaydb:flyway-mysql'
 
-  implementation 'org.mapstruct:mapstruct:1.5.2.Final'
+  implementation 'org.mapstruct:mapstruct:1.6.3'
 
-  implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
-  implementation 'org.mybatis:mybatis:3.5.10' // https://github.com/mybatis/mybatis-3/pull/2477#issuecomment-1076916312
+  implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
+  implementation 'org.mybatis:mybatis:3.5.19'
 
-  implementation 'org.springdoc:springdoc-openapi-ui:1.6.11'
+  implementation 'org.springdoc:springdoc-openapi-ui:1.8.0'
 
   compileOnly 'org.projectlombok:lombok'
 
   runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
-  annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
+  annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
   annotationProcessor 'org.projectlombok:lombok'
 
-  testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+  testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
 
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

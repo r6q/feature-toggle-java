@@ -1,5 +1,5 @@
 ### Get All Features
-GET http://localhost:8080/api/v1/features/
+GET http://localhost:8080/api/v1/features
 
 ### Get Feature By Id
 GET http://localhost:8080/api/v1/features/3

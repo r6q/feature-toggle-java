@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class FeatureToggleApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(FeatureToggleApplication.class, args);
+    void main() {
+        SpringApplication.run(FeatureToggleApplication.class);
     }
 
 }
