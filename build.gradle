@@ -1,13 +1,13 @@
 plugins {
-  id 'com.google.cloud.tools.jib' version '3.4.4'
-  id 'org.springframework.boot' version '3.4.3'
+  id 'com.google.cloud.tools.jib' version '3.4.5'
+  id 'org.springframework.boot' version '3.5.7'
   id 'io.spring.dependency-management' version '1.1.7'
   id 'java'
+  id 'com.github.ben-manes.versions' version '0.53.0'
 }
 
 group = 'com.github.r6q'
-version = '1.0.0-SNAPSHOT'
-sourceCompatibility = '23'
+version = '1.0.0'
 
 configurations {
   compileOnly {
@@ -16,6 +16,7 @@ configurations {
   compileTestJava {
     extendsFrom testAnnotationProcessor
   }
+  mockitoAgent
 }
 
 repositories {
@@ -26,19 +27,18 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-validation'
   implementation 'org.springframework.boot:spring-boot-starter-web'
 
-  implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.18.3'
-
-  implementation 'net.logstash.logback:logstash-logback-encoder:8.0'
+  implementation 'net.logstash.logback:logstash-logback-encoder:9.0'
 
   implementation 'org.flywaydb:flyway-core'
   implementation 'org.flywaydb:flyway-mysql'
 
   implementation 'org.mapstruct:mapstruct:1.6.3'
 
-  implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
+  implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.5'
   implementation 'org.mybatis:mybatis:3.5.19'
 
-  implementation 'org.springdoc:springdoc-openapi-ui:1.8.0'
+  //http://server:port/swagger-ui/index.html
+  implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13'
 
   compileOnly 'org.projectlombok:lombok'
 
@@ -47,33 +47,55 @@ dependencies {
   annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
   annotationProcessor 'org.projectlombok:lombok'
 
-  testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
+  testAnnotationProcessor 'org.projectlombok:lombok'
 
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
 
-tasks.withType(JavaCompile).each {
-  it.options.compilerArgs.add('--enable-preview')
-}
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-test {
-  jvmArgs += "--enable-preview"
-  useJUnitPlatform {
-    excludeTags("itest")
+  mockitoAgent('org.mockito:mockito-core') {
+    transitive = false
   }
 }
 
+tasks {
+  bootJar {
+    archiveBaseName.set("app")
+  }
 
-def itest = tasks.register("itest", Test) {
-  jvmArgs += "--enable-preview"
+  check {
+    dependsOn("itest")
+  }
+
+  test {
+    jvmArgs += "-javaagent:${configurations.mockitoAgent.asPath}"
+    useJUnitPlatform {
+      excludeTags("itest")
+    }
+  }
+}
+
+tasks.register("itest", Test) {
   group("verification")
   description("Runs the integration tests.")
   shouldRunAfter("test")
+
+  testClassesDirs = sourceSets.test.output.classesDirs
+  classpath = sourceSets.test.runtimeClasspath
+
   useJUnitPlatform {
     includeTags("itest")
   }
 }
 
-tasks.named("check") {
-  dependsOn(itest)
+def isNonStable = { String version ->
+  def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
+  def regex = /^[0-9,.v-]+(-r)?$/
+  return !stableKeyword && !(version ==~ regex)
+}
+
+tasks.named("dependencyUpdates").configure {
+  rejectVersionIf {
+    isNonStable(it.candidate.version) && !isNonStable(it.currentVersion)
+  }
 }

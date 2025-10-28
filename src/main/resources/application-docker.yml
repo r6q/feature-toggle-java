@@ -1,2 +1,2 @@
 db:
-  host: docker.for.mac.localhost
+  host: host.docker.internal

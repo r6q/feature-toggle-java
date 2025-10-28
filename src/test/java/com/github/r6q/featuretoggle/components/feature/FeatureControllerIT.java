@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,7 +28,7 @@ class FeatureControllerIT {
     @Test
     @DisplayName("should create new feature and retrieve it by ID")
     void getFeatureById() throws Exception {
-        String id = createFeature();
+        String id = create();
 
         mvc.perform(get("/api/v1/features/{id}", id))
                 .andExpect(status().isOk())
@@ -39,29 +40,33 @@ class FeatureControllerIT {
     }
 
     @Test
-    @DisplayName("should create new feature and return 'Location' header")
-    void createFeture() throws Exception {
-        mvc.perform(post("/api/v1/features")
-                        .content(createFeatureRequest("test-name-create"))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(result -> assertThat(result.getResponse().getHeader("Location")).containsPattern("/api/v1/features/\\d+"));
-    }
+    @DisplayName("should update existing feature")
+    void update() throws Exception {
+        var id = create();
+        var updateRequest = """
+                {
+                  "name": "updated-name",
+                  "description": "updated description",
+                  "enabled": false,
+                  "expiration": "2024-01-01T00:00:00"
+                }
+                """;
 
-    @Test
-    void update() {
-        // TODO: implement
+        mvc.perform(put("/api/v1/features/{id}", id)
+                        .content(updateRequest)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
     }
 
     @Test
     @DisplayName("should create new feature and delete it")
     void deleteFeature() throws Exception {
-        var id = createFeature();
+        var id = create();
 
         mvc.perform(delete("/api/v1/features/{id}", id)).andExpect(status().isNoContent());
     }
 
-    private String createFeature() throws Exception {
+    private String create() throws Exception {
         var header = mvc.perform(post("/api/v1/features")
                         .content(createFeatureRequest("test-name"))
                         .contentType(MediaType.APPLICATION_JSON))

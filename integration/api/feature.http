@@ -9,7 +9,7 @@ POST http://localhost:8080/api/v1/features
 Content-Type: application/json
 
 {
-  "name": "FIRST_{{$randomInt}}{{$randomInt}}{{$randomInt}}",
+  "name": "FEATURE_{{$randomInt}}{{$randomInt}}{{$randomInt}}",
   "description": "this is a test description",
   "enabled": true,
   "expiration": "2023-12-22T12:55:00"

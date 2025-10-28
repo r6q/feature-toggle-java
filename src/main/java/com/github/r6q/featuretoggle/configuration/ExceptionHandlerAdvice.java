@@ -31,11 +31,13 @@ import java.util.stream.StreamSupport;
 
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ElementKind;
+import lombok.extern.slf4j.Slf4j;
 
 import static com.github.r6q.featuretoggle.common.rest.ErrorCode.CONVERSION;
 import static com.github.r6q.featuretoggle.common.rest.ErrorCode.INTERNAL;
 import static com.github.r6q.featuretoggle.common.rest.ErrorCode.VALIDATION;
 
+@Slf4j
 @RestControllerAdvice
 public class ExceptionHandlerAdvice {
 
@@ -137,7 +139,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     ErrorResponse handle(Throwable ex) {
-        // TODO logging
+        log.error("Unhandled exception: {}", ex.getMessage());
         return new ErrorResponse(List.of(Error.of(INTERNAL, ex.getMessage())));
     }
 }

@@ -13,3 +13,6 @@ spring:
     password: feat_p
     user: feat_u
     url: jdbc:mariadb://${db.host}:3316/feat
+  threads:
+    virtual:
+      enabled: true

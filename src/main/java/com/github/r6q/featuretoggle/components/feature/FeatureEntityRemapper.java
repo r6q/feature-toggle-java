@@ -4,6 +4,5 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 interface FeatureEntityRemapper {
-    FeatureEntity dtoToEntity(Feature source);
-    Feature entityToDto(FeatureEntity destination);
+    FeatureResponse entityToDto(FeatureEntity destination);
 }

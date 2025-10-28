@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-record FeatureUpdateRequest(
+public record FeatureUpdateRequest(
         int id,
         @NotBlank(message = "Name is required")
         @Size(min = 3, max = 30)

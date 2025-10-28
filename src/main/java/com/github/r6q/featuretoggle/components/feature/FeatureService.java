@@ -19,21 +19,21 @@ class FeatureService {
     private final FeatureEntityRemapper remapper;
 
     @Transactional(readOnly = true)
-    List<Feature> getAll() {
+    List<FeatureResponse> getAll() {
         return mapper.getAll().stream()
                 .map(remapper::entityToDto)
                 .toList();
     }
 
     @Transactional(readOnly = true)
-    public Feature getById(int id) {
+    FeatureResponse getById(int id) {
         return mapper.getById(id)
                 .map(remapper::entityToDto)
                 .orElseThrow(() -> new IllegalStateException("todo change to specific exception"));
     }
 
     @Transactional
-    public int create(FeatureCreateRequest request) {
+    int create(FeatureCreateRequest request) {
         final var entity = FeatureEntity.builder()
                 .name(request.name())
                 .description(request.description())
@@ -45,7 +45,7 @@ class FeatureService {
     }
 
     @Transactional
-    public void update(int id, FeatureUpdateRequest request) {
+    void update(int id, FeatureUpdateRequest request) {
         log.info("Updating feature with ID {}", v("ID", id)); // Test structured `StructuredArgument` logging
         final var entity = FeatureEntity.builder()
                 .id(id)
@@ -59,7 +59,7 @@ class FeatureService {
     }
 
     @Transactional
-    public void delete(int id) {
+    void delete(int id) {
         mapper.delete(id);
     }
 }
